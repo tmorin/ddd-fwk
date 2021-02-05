@@ -1,15 +1,15 @@
-# p2p-fwk
+# ddd-fwk
 
-[![Integration](https://github.com/tmorin/p2p-fwk/workflows/Integration/badge.svg?branch=master)](https://github.com/tmorin/p2p-fwk/actions?query=workflow%3AIntegration+branch%3Amaster)
+[![Integration](https://github.com/tmorin/ddd-fwk/workflows/Integration/badge.svg?branch=master)](https://github.com/tmorin/ddd-fwk/actions?query=workflow%3AIntegration+branch%3Amaster)
 
-> A set of libraries helping to implement p2p applications.
+> A set of libraries helping to implement applications embracing the Domain Driven Design approach.
 
-- [fwk-infra-bus-local](packages/p2p-fwk-infra-bus-local)
-- [fwk-infra-config-inmemory](packages/p2p-fwk-infra-config-inmemory)
-- [fwk-infra-logger-console](packages/p2p-fwk-infra-logger-console)
-- [fwk-infra-test](packages/p2p-fwk-infra-test)
-- [fwk-model-core](packages/p2p-fwk-model-core)
-- [fwk-model-test](packages/p2p-fwk-model-test)
+- [fwk-infra-bus-local](packages/ddd-fwk-infra-bus-local)
+- [fwk-infra-config-inmemory](packages/ddd-fwk-infra-config-inmemory)
+- [fwk-infra-logger-console](packages/ddd-fwk-infra-logger-console)
+- [fwk-infra-test](packages/ddd-fwk-infra-test)
+- [fwk-model-core](packages/ddd-fwk-model-core)
+- [fwk-model-test](packages/ddd-fwk-model-test)
 
 ## Build
 

@@ -1,16 +1,16 @@
 {
-  "name": "p2p-fwk",
+  "name": "ddd-fwk",
   "private": true,
   "description": "A set of libraries helping to implement p2p applications.",
   "license": "MIT",
   "author": "Thibault Morin",
-  "homepage": "https://github.com/tmorin/p2p-fwk",
+  "homepage": "https://github.com/tmorin/ddd-fwk",
   "bugs": {
-    "url": "https://github.com/tmorin/p2p-fwk/issues"
+    "url": "https://github.com/tmorin/ddd-fwk/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:tmorin/p2p-fwk.git"
+    "url": "git@github.com:tmorin/ddd-fwk.git"
   },
   "scripts": {
     "bootstrap": "lerna bootstrap",
