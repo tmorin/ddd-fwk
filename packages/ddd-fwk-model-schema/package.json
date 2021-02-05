@@ -1,5 +1,5 @@
 {
-  "name": "@tmorin/ddd-fwk-model-core",
+  "name": "@tmorin/ddd-fwk-model-schema",
   "version": "0.0.0-alpha.0",
   "publishConfig": {
     "access": "public"
@@ -10,5 +10,8 @@
     "build": "tsc -p tsconfig.build.json",
     "clean": "rimraf lib tmp coverage",
     "test": "jest --runInBand --detectOpenHandles"
+  },
+  "dependencies": {
+    "schema-dts": "^0.7.1"
   }
 }

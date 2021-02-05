@@ -1,5 +1,5 @@
 {
-  "name": "@tmorin/ddd-fwk-model-core",
+  "name": "@tmorin/ddd-fwk-model-fs",
   "version": "0.0.0-alpha.0",
   "publishConfig": {
     "access": "public"

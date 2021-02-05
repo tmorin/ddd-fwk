@@ -16,6 +16,7 @@
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
     "clean": "lerna run clean --parallel && rimraf coverage",
+    "reset": "lerna run clean --parallel && lerna exec rimraf node_modules && rimraf node_modules coverage",
     "jest": "jest --runInBand --detectOpenHandles --coverage",
     "test": "lerna run test --stream --concurrency=1"
   },
