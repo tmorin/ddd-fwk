@@ -21,15 +21,24 @@ export interface ContainerConfiguration extends ModuleConfiguration {
   modules: Array<Module>
 }
 
+/**
+ * The symbol can be used to lookup container instances.
+ */
 export const ContainerSymbol = Symbol.for('Container');
 
+/**
+ * A container implements the Dependency Injection pattern.
+ */
 export class Container {
 
   private readonly configuration: ContainerConfiguration;
 
-  public readonly registry: Registry;
-
   private readonly modules: Array<Module>;
+
+  /**
+   * The registry contains all managed objects.
+   */
+  public readonly registry: Registry;
 
   constructor(
     configuration: Partial<ContainerConfiguration> = {}
@@ -42,22 +51,47 @@ export class Container {
     this.modules = this.configuration.modules;
   }
 
+  /**
+   * The name of the container.
+   */
   get name() {
     return this.configuration.name
   }
 
+  /**
+   * The main message bus.
+   */
   get messageBus() {
     return this.registry.resolve<MessageBus>(MessageBusSymbol);
   }
 
+  /**
+   * The main logger factory
+   */
   get loggerFactory() {
     return this.registry.resolve<LoggerFactory>(LoggerFactorySymbol);
   }
 
+  /**
+   * The main config provider.
+   */
   get configProvider() {
     return this.registry.resolve<ConfigProvider>(ConfigProviderSymbol);
   }
 
+  /**
+   * Initialize the container.
+   * 
+   * 1. initialize the modules
+   * 2. discover and register the command handlers
+   * 3. discover and register the query handlers
+   * 4. discover and register the event listeners
+   * 5. discover and configure the components
+   * 
+   * The initialization expects a main message bus, logger factory and config provider.
+   * 
+   * @return the container it-self
+   */
   async initialize(): Promise<this> {
     this.registry.registerValue(ContainerSymbol, this);
     
@@ -112,6 +146,14 @@ export class Container {
     return this;
   }
 
+  /**
+   * Clean a container instance.
+   *
+   * 1. dispose the components
+   * 2. dispose the modules
+   *
+   * @return the container it-self
+   */
   async dispose() {
     if (this.registry.contains(ComponentSymbol)) {
       const components = this.registry.resolveAll<Component>(ComponentSymbol);
@@ -135,6 +177,9 @@ export class Container {
 
 }
 
+/**
+ * Builds a container instance.
+ */
 export class ContainerBuilder {
 
   constructor(
@@ -144,20 +189,38 @@ export class ContainerBuilder {
   ) {
   }
 
+  /**
+   * Get a fresh builder.
+   */
   static create() {
     return new ContainerBuilder();
   }
 
+  /**
+   * Set a custom container name.
+   * @param name the name
+   * @return the builder
+   */
   name(name: string) {
     this._name = name;
     return this;
   }
 
+  /**
+   * Set a custom registry.
+   * @param registry the registry
+   * @return the builder
+   */
   registry(registry: Registry) {
     this._registry = registry;
     return this;
   }
 
+  /**
+   * Register modules. 
+   * @param modules the modules
+   * @return the builder
+   */
   module(...modules: Array<Module>) {
     for (const module of modules) {
       this._modules.push(module);
@@ -165,6 +228,11 @@ export class ContainerBuilder {
     return this;
   }
 
+  /**
+   * Register an array of modules.
+   * @param modules the modules
+   * @return the builder
+   */
   modules(modules: Array<Module>) {
     for (const module of modules) {
       this._modules.push(module);
@@ -172,6 +240,10 @@ export class ContainerBuilder {
     return this;
   }
 
+  /**
+   * Build the container.
+   * @return the container
+   */
   build(): Container {
     return new Container({
       name: this._name,

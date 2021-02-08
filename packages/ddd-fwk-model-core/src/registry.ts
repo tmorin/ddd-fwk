@@ -1,25 +1,76 @@
 export type RegistryKey = string | symbol
 
+/**
+ * A registry is used to store things managed by a container.
+ */
 export interface Registry {
+
+  /**
+   * Register a new key/value entry.
+   * @param key the key
+   * @param value the value
+   * @return the registry
+   */
   registerValue(key: RegistryKey, value: any): this
 
+  /**
+   * Register a factory.
+   * @param key the key
+   * @param factory the value
+   * @param options the options
+   * @return the registry
+   */
   registerFactory<T>(key: RegistryKey, factory: Factory<T>, options?: FactoryOptions): this
 
+  /**
+   * Resolve the first found entry matching a key.
+   * @param key the key
+   * @return the value
+   */
   resolve<T>(key: RegistryKey): T
 
+  /**
+   * Resolve all entries matching a key.
+   * @param key the key
+   * @return the values
+   */
   resolveAll<T>(key: RegistryKey): Array<T>
 
+  /**
+   * Checks if the key match an entry.
+   * @param key the key
+   * @return true when the key matches an existing entry.
+   */
   contains(key: RegistryKey): boolean
 }
 
+/**
+ * A factory.
+ */
 export interface Factory<T> {
+  /**
+   * Create a value.
+   * @param registry a registry
+   * @return the value
+   */
   (registry: Registry): T
 }
 
+/**
+ * An entry.
+ */
 interface Entry<T> {
+  /**
+   * Return an value.
+   * @param registry a registry
+   * @return the value
+   */
   get(registry: Registry): T
 }
 
+/**
+ * An entry of type value. 
+ */
 class ValueEntry<T> implements Entry<T> {
   constructor(
     readonly value: T
@@ -31,10 +82,19 @@ class ValueEntry<T> implements Entry<T> {
   }
 }
 
+/**
+ * The factory options.
+ */
 export type FactoryOptions = {
+  /**
+   * When true, then the factory has to be only called once.
+   */
   singleton?: boolean
 }
 
+/**
+ * An entry of type factory.
+ */
 class FactoryEntry<T> implements Entry<T> {
   constructor(
     private readonly factory: Factory<T>,
@@ -54,6 +114,9 @@ class FactoryEntry<T> implements Entry<T> {
   }
 }
 
+/**
+ * The default implementation of a registry.
+ */
 export class DefaultRegistry implements Registry {
 
   constructor(

@@ -1,5 +1,8 @@
 import {Message, MessageName, MessageType} from './message';
 
+/**
+ * An abstract implementation of result.
+ */
 export abstract class Result<M = any> implements Message<M> {
 
   /* istanbul ignore next */
@@ -12,7 +15,13 @@ export abstract class Result<M = any> implements Message<M> {
 
 }
 
+/**
+ * Provide the implementation of an "empty result", .i.e. when `void` is expected.
+ */
 export class EmptyResult extends Result<void> {
+  /**
+   * The result name.
+   */
   public static readonly RESULT_NAME = Symbol.for(`fwk/${EmptyResult.name}`);
 
   /* istanbul ignore next */
@@ -20,6 +29,10 @@ export class EmptyResult extends Result<void> {
     super(undefined, EmptyResult.name)
   }
 
+  /**
+   * Create a empty result from scratch.
+   * @return the empty result
+   */
   static create() {
     return new EmptyResult();
   }

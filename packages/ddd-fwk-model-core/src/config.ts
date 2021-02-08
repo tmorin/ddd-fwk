@@ -5,8 +5,14 @@ export interface Config {
   [key: string]: any
 }
 
+/**
+ * A scope is used to separate the config domains.
+ */
 export type ConfigScope = string | symbol
 
+/**
+ * The symbol can be used to lookup config provider instances.
+ */
 export const ConfigProviderSymbol = Symbol.for('fwk/ConfigProvider');
 
 /**
