@@ -9,8 +9,6 @@
 - [fwk-infra-logger-console](packages/ddd-fwk-infra-logger-console)
 - [fwk-infra-test](packages/ddd-fwk-infra-test)
 - [fwk-model-core](packages/ddd-fwk-model-core)
-- [fwk-model-fs](packages/ddd-fwk-model-fs)
-- [fwk-model-schema](packages/ddd-fwk-model-schema)
 - [fwk-model-test](packages/ddd-fwk-model-test)
 
 ## Build
