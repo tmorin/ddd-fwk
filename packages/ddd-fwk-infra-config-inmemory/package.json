@@ -1,6 +1,6 @@
 {
   "name": "@tmorin/ddd-fwk-infra-config-inmemory",
-  "version": "0.0.0-alpha.0",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public"
   },
@@ -12,7 +12,7 @@
     "test": "jest --runInBand --detectOpenHandles"
   },
   "dependencies": {
-    "@tmorin/ddd-fwk-model-core": "0.0.0-alpha.0",
+    "@tmorin/ddd-fwk-model-core": "^0.1.0",
     "lodash.defaultsdeep": "^4.6.1"
   }
 }
