@@ -126,7 +126,7 @@ export class OnlyConfigureModule extends AbstractModule {
   static create(cb: (this: ConfigurableModule) => Promise<void>) {
     return new OnlyConfigureModule(cb);
   }
-  
+
   async configure(): Promise<void> {
     await this._configure.apply(this)
   }

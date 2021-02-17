@@ -1,4 +1,4 @@
-import {Message, MessageName, MessageType} from './message';
+import {Message, MessageId, MessageName, MessageType} from './message';
 import {Result} from './result';
 
 /**
@@ -6,11 +6,13 @@ import {Result} from './result';
  */
 export abstract class Query<M = any> implements Message<M> {
 
+  readonly type: MessageType = MessageType.query
+
   /* istanbul ignore next */
   protected constructor(
     readonly body: M,
     readonly name: MessageName,
-    readonly type: MessageType = MessageType.query
+    readonly messageId: MessageId = `${MessageType.query}-${Date.now()}`
   ) {
   }
 
@@ -47,6 +49,11 @@ export abstract class QueryHandler<Q extends Query = Query, R extends Result = R
  */
 export function handleQueries(...names: Array<QueryName>) {
   return (constructor: Function) => {
-    constructor.prototype['__fwkHandledQueryNames'] = names;
+    constructor.prototype[PRIVATE_PROPERTY_QUERY_NAMES] = names;
   }
 }
+
+/**
+ * @private
+ */
+export const PRIVATE_PROPERTY_QUERY_NAMES = '__fwkHandledQueryNames';

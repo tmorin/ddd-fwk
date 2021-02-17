@@ -11,7 +11,7 @@ export const MessageBusSymbol = Symbol.for('fwk/MessageBus');
 /**
  * The message bus is responsible to transfer messages.
  * It provides an API to send message and also to react on them.
- * 
+ *
  * It is a key component to implement the [Location Transparency](https://www.reactivemanifesto.org/glossary#Location-Transparency) pattern.
  */
 export interface MessageBus {

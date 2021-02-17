@@ -16,7 +16,7 @@ class EventA extends Event {
 
 class CommandAHandler extends CommandHandler<CommandA, EmptyResult, EventA> {
   async handle(command: Command): Promise<[EmptyResult, Array<Event>]> {
-    return [EmptyResult.create(), [new EventA()]];
+    return [EmptyResult.from(command), [new EventA()]];
   }
 }
 

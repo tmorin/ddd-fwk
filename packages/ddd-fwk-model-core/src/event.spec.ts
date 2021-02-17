@@ -1,4 +1,4 @@
-import {Event, EventListener, EventListenerOptions, listenEvents} from './event';
+import {Event, EventListener, EventListenerOptions, listenEvents, PRIVATE_PROPERTY_EVENT_NAMES} from './event';
 
 class EventA extends Event {
   constructor() {
@@ -15,9 +15,9 @@ class EventAListener implements EventListener {
 describe('event', function () {
 
   it('should flags handler with @listenEvents', function () {
-    expect(EventAListener['prototype']['__fwkHandledEventNames']).toContainEqual(EventA.name);
+    expect(EventAListener['prototype'][PRIVATE_PROPERTY_EVENT_NAMES]).toContainEqual(EventA.name);
     const queryAHandler = new EventAListener();
-    expect(queryAHandler['__fwkHandledEventNames']).toContainEqual(EventA.name);
+    expect(queryAHandler[PRIVATE_PROPERTY_EVENT_NAMES]).toContainEqual(EventA.name);
   });
 
 })

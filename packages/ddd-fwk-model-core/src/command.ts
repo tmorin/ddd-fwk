@@ -1,4 +1,4 @@
-import {Message, MessageName, MessageType} from './message';
+import {Message, MessageId, MessageName, MessageType} from './message';
 import {Event} from './event';
 import {Result} from './result';
 
@@ -7,11 +7,13 @@ import {Result} from './result';
  */
 export abstract class Command<B = any> implements Message<B> {
 
+  readonly type: MessageType = MessageType.command
+
   /* istanbul ignore next */
   protected constructor(
     readonly body: B,
     readonly name: MessageName,
-    readonly type: MessageType = MessageType.command
+    readonly messageId: MessageId = `${MessageType.command}-${Date.now()}`
   ) {
   }
 
@@ -28,7 +30,7 @@ export type CommandName = MessageName;
 export const CommandHandlerSymbol = Symbol.for('fwk/CommandHandler');
 
 /**
- * A command handler hosts the handling logic for one or many commands.  
+ * A command handler hosts the handling logic for one or many commands.
  */
 export abstract class CommandHandler<C extends Command = Command, R extends Result = Result, E extends Event = Event> {
 
@@ -48,6 +50,11 @@ export abstract class CommandHandler<C extends Command = Command, R extends Resu
  */
 export function handleCommands(...names: Array<CommandName>) {
   return (constructor: Function) => {
-    constructor.prototype['__fwkHandledCommandNames'] = names;
+    constructor.prototype[PRIVATE_PROPERTY_COMMAND_NAMES] = names;
   }
 }
+
+/**
+ * @private
+ */
+export const PRIVATE_PROPERTY_COMMAND_NAMES = '__fwkHandledCommandNames';

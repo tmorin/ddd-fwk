@@ -1,39 +1,39 @@
-import {Message, MessageName, MessageType} from './message';
+import {Message, MessageId, MessageName, MessageType} from './message';
+import {Command} from './command';
+import {Query} from './query';
 
 /**
  * An abstract implementation of result.
  */
-export abstract class Result<M = any> implements Message<M> {
+export class Result<B = any> implements Message<B> {
 
-  /* istanbul ignore next */
+  readonly type: MessageType = MessageType.result
+
   protected constructor(
-    readonly body: M,
+    readonly body: B,
     readonly name: MessageName,
-    readonly type: MessageType = MessageType.result
+    readonly correlationId: MessageId,
+    readonly messageId: MessageId = `${MessageType.result}-${Date.now()}`
   ) {
+  }
+
+  static create<B = any>(message: Query | Command, body: B): Result<B> {
+    return new Result(body, message.name, message.messageId);
   }
 
 }
 
-/**
- * Provide the implementation of an "empty result", .i.e. when `void` is expected.
- */
 export class EmptyResult extends Result<void> {
-  /**
-   * The result name.
-   */
-  public static readonly RESULT_NAME = Symbol.for(`fwk/${EmptyResult.name}`);
 
-  /* istanbul ignore next */
-  constructor() {
-    super(undefined, EmptyResult.name)
+  protected constructor(
+    name: MessageName,
+    correlationId: MessageId,
+  ) {
+    super(undefined, name, correlationId);
   }
 
-  /**
-   * Create a empty result from scratch.
-   * @return the empty result
-   */
-  static create() {
-    return new EmptyResult();
+  static from(message: Query | Command): EmptyResult {
+    return new EmptyResult(message.name, message.messageId);
   }
+
 }

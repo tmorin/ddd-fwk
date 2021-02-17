@@ -69,7 +69,7 @@ interface Entry<T> {
 }
 
 /**
- * An entry of type value. 
+ * An entry of type value.
  */
 class ValueEntry<T> implements Entry<T> {
   constructor(

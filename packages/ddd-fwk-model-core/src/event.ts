@@ -1,15 +1,17 @@
-import {Message, MessageName, MessageType} from './message';
+import {Message, MessageId, MessageName, MessageType} from './message';
 
 /**
  * An abstract implementation of an event.
  */
 export abstract class Event<B = any> implements Message<B> {
 
+  readonly type: MessageType = MessageType.event
+
   /* istanbul ignore next */
   protected constructor(
     readonly body: B,
     readonly name: MessageName,
-    readonly type: MessageType = MessageType.event
+    readonly messageId: MessageId = `${MessageType.event}-${Date.now()}`
   ) {
   }
 
@@ -20,7 +22,7 @@ export abstract class Event<B = any> implements Message<B> {
  */
 export interface EventListenerCallback<E extends Event = Event> {
   /**
-   * Callback of an event listener. 
+   * Callback of an event listener.
    * @param event the event
    */
   (event?: E): void
@@ -67,6 +69,11 @@ export abstract class EventListener {
  */
 export function listenEvents(...names: Array<EventName>) {
   return (constructor: Function) => {
-    constructor.prototype['__fwkHandledEventNames'] = names;
+    constructor.prototype[PRIVATE_PROPERTY_EVENT_NAMES] = names;
   }
 }
+
+/**
+ * @private
+ */
+export const PRIVATE_PROPERTY_EVENT_NAMES = '__fwkHandledEventNames';

@@ -22,8 +22,8 @@ describe('registry', function () {
   });
 
   it('should failed when not resolve values', function () {
-    expect(()=>registry.resolve('value')).toThrowError('unable to resolve an entry with the key (value)');
-    expect(()=>registry.resolveAll('value')).toThrowError('unable to resolve an entry with the key (value)');
+    expect(() => registry.resolve('value')).toThrowError('unable to resolve an entry with the key (value)');
+    expect(() => registry.resolveAll('value')).toThrowError('unable to resolve an entry with the key (value)');
   });
 
   it('should register factory', function () {

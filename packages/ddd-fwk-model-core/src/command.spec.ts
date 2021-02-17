@@ -1,4 +1,4 @@
-import {Command, CommandHandler, handleCommands} from './command';
+import {Command, CommandHandler, handleCommands, PRIVATE_PROPERTY_COMMAND_NAMES} from './command';
 import {Event} from './event';
 import {EmptyResult} from './result';
 
@@ -17,16 +17,16 @@ class EventA extends Event {
 @handleCommands(CommandA.name)
 class CommandAHandler implements CommandHandler<CommandA, EmptyResult> {
   async handle(command: CommandA): Promise<[EmptyResult, Array<EventA>]> {
-    return [EmptyResult.create(), [new EventA()]];
+    return [EmptyResult.from(command), [new EventA()]];
   }
 }
 
 describe('command', function () {
 
   it('should flags handler with @handleCommands', function () {
-    expect(CommandAHandler['prototype']['__fwkHandledCommandNames']).toContainEqual(CommandA.name);
+    expect(CommandAHandler['prototype'][PRIVATE_PROPERTY_COMMAND_NAMES]).toContainEqual(CommandA.name);
     const commandAHandler = new CommandAHandler();
-    expect(commandAHandler['__fwkHandledCommandNames']).toContainEqual(CommandA.name);
+    expect(commandAHandler[PRIVATE_PROPERTY_COMMAND_NAMES]).toContainEqual(CommandA.name);
   });
 
 })

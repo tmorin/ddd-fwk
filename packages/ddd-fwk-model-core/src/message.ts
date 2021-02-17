@@ -1,4 +1,9 @@
 /**
+ * The identifier of a message.
+ */
+export type MessageId = string;
+
+/**
  * The name of a message.
  */
 export type MessageName = string | symbol;
@@ -29,6 +34,10 @@ export enum MessageType {
  * A message is an information published by a
  */
 export interface Message<B = any> {
+  /**
+   * The name of the message.
+   */
+  readonly messageId: MessageId
   /**
    * The name of the message.
    */

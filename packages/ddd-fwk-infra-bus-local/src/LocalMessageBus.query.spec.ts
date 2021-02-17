@@ -1,4 +1,4 @@
-import {Container, Query, QueryHandler, Result} from '@tmorin/ddd-fwk-model-core';
+import {Container, EmptyResult, Query, QueryHandler} from '@tmorin/ddd-fwk-model-core';
 import {LocalMessageBus} from '.';
 import {ConsoleLoggerFactory} from '@tmorin/ddd-fwk-infra-logger-console';
 
@@ -8,15 +8,9 @@ class QueryA extends Query {
   }
 }
 
-class ResultA extends Result {
-  constructor() {
-    super(undefined, 'ResultA');
-  }
-}
-
-class QueryAHandler extends QueryHandler<QueryA, ResultA> {
-  async handle(query: QueryA): Promise<ResultA> {
-    return new ResultA();
+class QueryAHandler extends QueryHandler<QueryA, EmptyResult> {
+  async handle(query: QueryA): Promise<EmptyResult> {
+    return EmptyResult.from(query);
   }
 }
 
@@ -26,7 +20,7 @@ describe('LocalMessageBus/query', function () {
     const bus = new LocalMessageBus(new ConsoleLoggerFactory(new Container()));
     bus.registerQueryHandler(QueryA.name, new QueryAHandler());
     const resultA = await bus.call(new QueryA());
-    expect(resultA.name).toEqual('ResultA');
+    expect(resultA.name).toEqual(QueryA.name);
   });
 
   it('should dispose', async function () {
