@@ -16,8 +16,10 @@
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
     "clean": "lerna run clean --parallel && rimraf coverage",
-    "reset": "lerna run clean --parallel && lerna exec rimraf node_modules && rimraf node_modules coverage",
     "jest": "jest --runInBand --detectOpenHandles --coverage",
+    "pre:release": "lerna version prerelease --conventional-commits --no-changelog --no-git-tag-version --yes && git commit -a -m 'chore(release): bump preprelease version' && git push && lerna publish from-package --yes",
+    "release": "lerna version --conventional-commits --conventional-graduate --yes",
+    "reset": "lerna run clean --parallel && lerna exec rimraf node_modules && rimraf node_modules coverage",
     "test": "lerna run test --stream --concurrency=1"
   },
   "devDependencies": {

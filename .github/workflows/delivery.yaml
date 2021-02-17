@@ -1,14 +1,15 @@
-name: Integration
+name: Delivery
 
 on:
   push:
-    branches:
-      - '**'
+    tags:
+      - 'v*.*.*'
+      - '!v*.*.*-*'
 
 jobs:
   lerna-build:
-    name: Lerna Build
-    runs-on: ubuntu-20.04
+    name: Lerna Build and Publish
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -31,3 +32,7 @@ jobs:
         run: npm run build
       - name: Test packages
         run: npm run jest
+      - name: Publish packages
+        run: npx lerna publish from-git --yes
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
